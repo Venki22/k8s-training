@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: afinity-deploy
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: afinity-pod
+      labels:
+        app: web
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: name
+                operator: In
+                values:
+                - Workerone
+      containers:
+      - name: afinity-con
+        image: venki22/mvntest:1
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myaftnity-svc
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+  - port: 8080
+    targetPort: 8080

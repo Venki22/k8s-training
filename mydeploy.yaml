@@ -1,0 +1,25 @@
+#kubectl create deploy mydeploy-test --image=nginx --dry-run=client -o yaml >mydeploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mydeploy-test
+  name: mydeploy-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mydeploy-test
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mydeploy-test
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myreplicaset-rs
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: myrs-pod
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: myrs-con
+        image: nginx
+        ports:
+        - containerPort: 80
